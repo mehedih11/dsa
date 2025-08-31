@@ -7,19 +7,20 @@ vector<vector<bool>> visited;
 
 bool bfs(int si, int sj, int di, int dj) {
     queue<pair<int, int>> q;
-    q.push({si, sj});
+    q.push(make_pair(si, sj));
     visited[si][sj] = true;
     int dx[] = {0, 0, 1, -1};
     int dy[] = {1, -1, 0, 0};
     while (!q.empty()) {
-        auto [x, y] = q.front(); q.pop();
+        pair<int, int> curr = q.front(); q.pop();
+        int x = curr.first, y = curr.second;
         if (x == di && y == dj) return true;
         for (int d = 0; d < 4; d++) {
             int nx = x + dx[d], ny = y + dy[d];
             if (nx >= 0 && nx < N && ny >= 0 && ny < M &&
                 !visited[nx][ny] && grid[nx][ny] == '.') {
                 visited[nx][ny] = true;
-                q.push({nx, ny});
+                q.push(make_pair(nx, ny));
             }
         }
     }

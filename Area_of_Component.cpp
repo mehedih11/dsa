@@ -5,22 +5,26 @@ int N, M;
 vector<string> grid;
 vector<vector<bool>> visited;
 
+bool isvalid(int nx, int ny) {
+    return nx >= 0 && nx < N && ny >= 0 && ny < M && grid[nx][ny] == '.' && !visited[nx][ny];
+}
+
 int bfs(int si, int sj) {
     int area = 0;
     queue<pair<int, int>> q;
-    q.push({si, sj});
+    q.push(make_pair(si, sj));
     visited[si][sj] = true;
-    int dx[] = {0, 0, 1, -1};
-    int dy[] = {1, -1, 0, 0};
+    int dx[4] = {0, 0, 1, -1};
+    int dy[4] = {1, -1, 0, 0};
     while (!q.empty()) {
-        auto [x, y] = q.front(); q.pop();
+        pair<int, int> par = q.front(); q.pop();
+        int x = par.first, y = par.second;
         area++;
         for (int d = 0; d < 4; d++) {
             int nx = x + dx[d], ny = y + dy[d];
-            if (nx >= 0 && nx < N && ny >= 0 && ny < M &&
-                !visited[nx][ny] && grid[nx][ny] == '.') {
+            if (isvalid(nx, ny)) {
                 visited[nx][ny] = true;
-                q.push({nx, ny});
+                q.push(make_pair(nx, ny));
             }
         }
     }
@@ -38,7 +42,7 @@ int main() {
     bool found = false;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
-            if (!visited[i][j] && grid[i][j] == '.') {
+            if (grid[i][j] == '.' && !visited[i][j]) {
                 int area = bfs(i, j);
                 min_area = min(min_area, area);
                 found = true;

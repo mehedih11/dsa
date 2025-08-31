@@ -11,22 +11,23 @@ int dy[] = {1, -1, 0, 0};
 
 bool bfs(int sx, int sy, int& ex, int& ey) {
     queue<pair<int, int>> q;
-    q.push({sx, sy});
+    q.push(make_pair(sx, sy));
     visited[sx][sy] = true;
     while (!q.empty()) {
-        auto [x, y] = q.front(); q.pop();
+        pair<int, int> curr = q.front(); q.pop();
+        int x = curr.first, y = curr.second;
         for (int d = 0; d < 4; d++) {
             int nx = x + dx[d], ny = y + dy[d];
             if (nx >= 0 && nx < N && ny >= 0 && ny < M && !visited[nx][ny]) {
                 if (maze[nx][ny] == 'D') {
-                    parent[nx][ny] = {x, y};
+                    parent[nx][ny] = make_pair(x, y);
                     ex = nx; ey = ny;
                     return true;
                 }
                 if (maze[nx][ny] == '.') {
                     visited[nx][ny] = true;
-                    parent[nx][ny] = {x, y};
-                    q.push({nx, ny});
+                    parent[nx][ny] = make_pair(x, y);
+                    q.push(make_pair(nx, ny));
                 }
             }
         }
@@ -41,7 +42,7 @@ int main() {
         cin >> maze[i];
     }
     visited.assign(N, vector<bool>(M, false));
-    parent.assign(N, vector<pair<int, int>>(M, {-1, -1}));
+    parent.assign(N, vector<pair<int, int>>(M, make_pair(-1, -1)));
 
     int sx = -1, sy = -1, ex = -1, ey = -1;
     for (int i = 0; i < N; i++)
@@ -53,7 +54,7 @@ int main() {
     if (bfs(sx, sy, ex, ey)) {
         int x = ex, y = ey;
         while (parent[x][y].first != -1) {
-            auto [px, py] = parent[x][y];
+            int px = parent[x][y].first, py = parent[x][y].second;
             if (maze[px][py] == '.') maze[px][py] = 'X';
             x = px; y = py;
         }

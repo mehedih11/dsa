@@ -6,16 +6,17 @@ int knight_moves(int N, int M, int Ki, int Kj, int Qi, int Qj) {
     int dx[] = {2, 2, -2, -2, 1, 1, -1, -1};
     int dy[] = {1, -1, 1, -1, 2, -2, 2, -2};
     queue<pair<int, int>> q;
-    q.push({Ki, Kj});
+    q.push(make_pair(Ki, Kj));
     dist[Ki][Kj] = 0;
     while (!q.empty()) {
-        auto [x, y] = q.front(); q.pop();
+        pair<int, int> curr = q.front(); q.pop();
+        int x = curr.first, y = curr.second;
         if (x == Qi && y == Qj) return dist[x][y];
         for (int d = 0; d < 8; d++) {
             int nx = x + dx[d], ny = y + dy[d];
             if (nx >= 0 && nx < N && ny >= 0 && ny < M && dist[nx][ny] == -1) {
                 dist[nx][ny] = dist[x][y] + 1;
-                q.push({nx, ny});
+                q.push(make_pair(nx, ny));
             }
         }
     }
