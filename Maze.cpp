@@ -20,14 +20,14 @@ bool bfs(int sx, int sy, int& ex, int& ey) {
             int nx = x + dx[d], ny = y + dy[d];
             if (nx >= 0 && nx < N && ny >= 0 && ny < M && !visited[nx][ny]) {
                 if (maze[nx][ny] == 'D') {
-                    parent[nx][ny] = make_pair(x, y);
+                    parent[nx][ny] = {x, y};
                     ex = nx; ey = ny;
                     return true;
                 }
                 if (maze[nx][ny] == '.') {
                     visited[nx][ny] = true;
-                    parent[nx][ny] = make_pair(x, y);
-                    q.push(make_pair(nx, ny));
+                    parent[nx][ny] = {x, y};
+                    q.push({nx, ny});
                 }
             }
         }
@@ -42,7 +42,7 @@ int main() {
         cin >> maze[i];
     }
     visited.assign(N, vector<bool>(M, false));
-    parent.assign(N, vector<pair<int, int>>(M, make_pair(-1, -1)));
+    parent.assign(N, vector<pair<int, int>>(M, {-1, -1}));
 
     int sx = -1, sy = -1, ex = -1, ey = -1;
     for (int i = 0; i < N; i++)
