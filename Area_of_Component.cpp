@@ -12,7 +12,7 @@ bool isvalid(int nx, int ny) {
 int bfs(int si, int sj) {
     int area = 0;
     queue<pair<int, int>> q;
-    q.push(make_pair(si, sj));
+    q.push({si, sj});
     visited[si][sj] = true;
     int dx[4] = {0, 0, 1, -1};
     int dy[4] = {1, -1, 0, 0};
@@ -24,7 +24,7 @@ int bfs(int si, int sj) {
             int nx = x + dx[d], ny = y + dy[d];
             if (isvalid(nx, ny)) {
                 visited[nx][ny] = true;
-                q.push(make_pair(nx, ny));
+                q.push({nx, ny});
             }
         }
     }

@@ -6,7 +6,7 @@ int knight_moves(int N, int M, int Ki, int Kj, int Qi, int Qj) {
     int dx[] = {2, 2, -2, -2, 1, 1, -1, -1};
     int dy[] = {1, -1, 1, -1, 2, -2, 2, -2};
     queue<pair<int, int>> q;
-    q.push(make_pair(Ki, Kj));
+    q.push({Ki, Kj});
     dist[Ki][Kj] = 0;
     while (!q.empty()) {
         pair<int, int> curr = q.front(); q.pop();
@@ -16,7 +16,7 @@ int knight_moves(int N, int M, int Ki, int Kj, int Qi, int Qj) {
             int nx = x + dx[d], ny = y + dy[d];
             if (nx >= 0 && nx < N && ny >= 0 && ny < M && dist[nx][ny] == -1) {
                 dist[nx][ny] = dist[x][y] + 1;
-                q.push(make_pair(nx, ny));
+                q.push({nx, ny});
             }
         }
     }

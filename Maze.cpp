@@ -11,7 +11,7 @@ int dy[] = {1, -1, 0, 0};
 
 bool bfs(int sx, int sy, int& ex, int& ey) {
     queue<pair<int, int>> q;
-    q.push(make_pair(sx, sy));
+    q.push({sx, sy});
     visited[sx][sy] = true;
     while (!q.empty()) {
         pair<int, int> curr = q.front(); q.pop();

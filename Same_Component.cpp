@@ -7,7 +7,7 @@ vector<vector<bool>> visited;
 
 bool bfs(int si, int sj, int di, int dj) {
     queue<pair<int, int>> q;
-    q.push(make_pair(si, sj));
+    q.push({si, sj});
     visited[si][sj] = true;
     int dx[] = {0, 0, 1, -1};
     int dy[] = {1, -1, 0, 0};
@@ -20,7 +20,7 @@ bool bfs(int si, int sj, int di, int dj) {
             if (nx >= 0 && nx < N && ny >= 0 && ny < M &&
                 !visited[nx][ny] && grid[nx][ny] == '.') {
                 visited[nx][ny] = true;
-                q.push(make_pair(nx, ny));
+                q.push({nx, ny});
             }
         }
     }
