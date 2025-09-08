@@ -1,17 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-const ll INF = 1e18;
+long long ll = LONG_LONG_MAX;
+
+class Age {
+public:
+    int A, B;
+    long long W;
+    Age(int a, int b, long long w) : A(a), B(b), W(w) {}
+};
 
 int main() {
     int N, E;
     cin >> N >> E;
-    vector<tuple<int, int, ll>> edges;
+    vector<Age> edges;
     for (int i = 0; i < E; i++) {
         int A, B;
-        ll W;
+        long long W;
         cin >> A >> B >> W;
-        edges.push_back({A, B, W});
+        edges.push_back(Age(A, B, W));
     }
     int S;
     cin >> S;
@@ -22,16 +28,15 @@ int main() {
         cin >> queries[i];
     }
 
-    vector<ll> dist(N + 1, INF);
+    vector<long long> dist(N + 1, ll);
     dist[S] = 0;
     bool negative_cycle = false;
     for (int i = 1; i <= N; i++) {
         bool updated = false;
         for (auto& e : edges) {
-            int u, v;
-            ll w;
-            tie(u, v, w) = e;
-            if (dist[u] != INF && dist[v] > dist[u] + w) {
+            int u = e.A, v = e.B;
+            long long w = e.W;
+            if (dist[u] != ll && dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
                 updated = true;
             }
@@ -49,7 +54,7 @@ int main() {
 
     for (int i = 0; i < T; i++) {
         int D = queries[i];
-        if (dist[D] == INF) cout << "Not Possible" << endl;
+        if (dist[D] == ll) cout << "Not Possible" << endl;
         else cout << dist[D] << endl;
     }
     return 0;
