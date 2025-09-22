@@ -2,7 +2,6 @@
 using namespace std;
 
 bool canReach(int N) {
-    // Try to reach N from 1 by reversing the operations
     while (N > 1) {
         if (N % 2 == 0) {
             N /= 2;

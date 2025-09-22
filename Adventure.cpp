@@ -1,23 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+int val[1005], weight[1005];
+int dp[1005][1005];
+
+int knapsack(int i, int mx_weight)
+{
+    if (i < 0 || mx_weight <= 0)
+        return 0;
+
+    if (dp[i][mx_weight] != -1)
+        return dp[i][mx_weight];
+
+    if (weight[i] <= mx_weight)
+    {
+        int op1 = knapsack(i - 1, mx_weight - weight[i]) + val[i];
+        int op2 = knapsack(i - 1, mx_weight);
+        dp[i][mx_weight] = max(op1, op2);
+        return dp[i][mx_weight];
+    }
+    else
+    {
+        dp[i][mx_weight] = knapsack(i - 1, mx_weight);
+        return dp[i][mx_weight];
+    }
+}
+
+int main()
+{
     int T;
     cin >> T;
     while (T--) {
-        int N, W;
-        cin >> N >> W;
-        vector<int> w(N), v(N);
-        for (int i = 0; i < N; i++) cin >> w[i];
-        for (int i = 0; i < N; i++) cin >> v[i];
+        int n, mx_weight;
+        cin >> n >> mx_weight;
+        for (int i = 0; i < n; i++)
+            cin >> weight[i];
+        for (int i = 0; i < n; i++)
+            cin >> val[i];
 
-        vector<int> dp(W + 1, 0);
-        for (int i = 0; i < N; i++) {
-            for (int j = W; j >= w[i]; j--) {
-                dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
-            }
-        }
-        cout << dp[W] << endl;
+        for (int i = 0; i <= n; i++)
+            for (int j = 0; j <= mx_weight; j++)
+                dp[i][j] = -1;
+
+        cout << knapsack(n - 1, mx_weight) << endl;
     }
     return 0;
 }
